@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// নেমস্পেস App\Models\Users থেকে ইম্পোর্ট করা হলো 
-use App\Models\Users\Role;
+use App\Models\Role; // ✅ Role মডেল ইম্পোর্ট করা হলো
 use Illuminate\Http\Request;
 
 class RoleController extends Controller

@@ -34,7 +34,7 @@ export default {
             errorMessage.value = '';
 
             try {
-                const response = await axios.post('/api/roles', {
+                const response = await axios.post('http://127.0.0.1:8000/api/roles', {
                     role_name: role_name.value
                 });
                 successMessage.value = 'Role created successfully!';
