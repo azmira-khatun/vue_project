@@ -1,6 +1,6 @@
 <script setup>
 import AsideBar from '@/components/layouts/AsideBar.vue';
-// import MainFoot from '@/components/layouts/MainFoot.vue';
+import MainFoot from '@/components/layouts/MainFoot.vue';
 import MainHead from '@/components/layouts/MainHead.vue';
 
 
@@ -28,7 +28,7 @@ import MainHead from '@/components/layouts/MainHead.vue';
 
 
             <!-- Footer Start -->
-            <!-- <MainFoot /> -->
+            <MainFoot />
             <!-- Footer End -->
         </div>
 
