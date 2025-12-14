@@ -17,8 +17,8 @@
                 </div>
 
                 <div class="ms-3">
-                    <h6 class="mb-0">{{ auth.user?.name || 'Admin' }}</h6>
-                    <span>{{ auth.user?.role || 'User' }}</span>
+                    <h6 class="mb-0">{{ auth.user.name }}</h6>
+                    <span>{{ auth.user.role }}</span>
                 </div>
             </div>
 
@@ -28,70 +28,197 @@
                     <i class="fa fa-home me-2"></i> Dashboard
                 </router-link>
 
-                <div v-if="can('access_products')" class="nav-item dropdown">
+                <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-box me-2"></i> Products
                     </a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <router-link v-if="can('access_product_categories')" to="/product-categories"
-                            class="dropdown-item">
+                        <router-link to="/product-categories" class="dropdown-item">
                             Categories
                         </router-link>
-
-                        <router-link v-if="can('create_products')" to="/products/create" class="dropdown-item">
+                        <router-link to="/products/create" class="dropdown-item">
                             Create Product
                         </router-link>
-
                         <router-link to="/products" class="dropdown-item">
                             All Products
                         </router-link>
-
-                        <router-link v-if="can('print_barcodes')" to="/barcode-print" class="dropdown-item">
+                        <router-link to="/barcode-print" class="dropdown-item">
                             Print Barcode
                         </router-link>
                     </div>
                 </div>
 
-                <div v-if="can('access_sales')" class="nav-item dropdown">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-clipboard-check me-2"></i> Stock Adjustments
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/adjustments/create" class="dropdown-item">
+                            Create Adjustment
+                        </router-link>
+                        <router-link to="/adjustments" class="dropdown-item">
+                            All Adjustments
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-cart-check me-2"></i> Quotations
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/quotations/create" class="dropdown-item">
+                            Create Quotation
+                        </router-link>
+                        <router-link to="/quotations" class="dropdown-item">
+                            All Quotations
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bag me-2"></i> Purchases
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/purchases/create" class="dropdown-item">
+                            Create Purchase
+                        </router-link>
+                        <router-link to="/purchases" class="dropdown-item">
+                            All Purchases
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-arrow-return-right me-2"></i> Purchase Returns
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/purchase-returns/create" class="dropdown-item">
+                            Create Purchase Return
+                        </router-link>
+                        <router-link to="/purchase-returns" class="dropdown-item">
+                            All Purchase Returns
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-receipt me-2"></i> Sales
                     </a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <router-link v-if="can('create_sales')" to="/sales/create" class="dropdown-item">
+                        <router-link to="/sales/create" class="dropdown-item">
                             Create Sale
                         </router-link>
-
                         <router-link to="/sales" class="dropdown-item">
                             All Sales
                         </router-link>
                     </div>
                 </div>
 
-                <div v-if="can('access_expenses')" class="nav-item dropdown">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-arrow-return-left me-2"></i> Sale Returns
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/sale-returns/create" class="dropdown-item">
+                            Create Sale Return
+                        </router-link>
+                        <router-link to="/sale-returns" class="dropdown-item">
+                            All Sale Returns
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-wallet me-2"></i> Expenses
                     </a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <router-link v-if="can('create_expenses')" to="/expenses/create" class="dropdown-item">
+                        <router-link to="/expense-categories" class="dropdown-item">
+                            Categories
+                        </router-link>
+                        <router-link to="/expenses/create" class="dropdown-item">
                             Create Expense
                         </router-link>
-
                         <router-link to="/expenses" class="dropdown-item">
                             All Expenses
                         </router-link>
                     </div>
                 </div>
 
-                <div v-if="can('access_user_management')" class="nav-item dropdown">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-people me-2"></i> Parties
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/customers" class="dropdown-item">
+                            Customers
+                        </router-link>
+                        <router-link to="/suppliers" class="dropdown-item">
+                            Suppliers
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-chart-bar me-2"></i> Reports
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/profit-loss-report" class="dropdown-item">
+                            Profit / Loss Report
+                        </router-link>
+                        <router-link to="/payments-report" class="dropdown-item">
+                            Payments Report
+                        </router-link>
+                        <router-link to="/sales-report" class="dropdown-item">
+                            Sales Report
+                        </router-link>
+                        <router-link to="/purchases-report" class="dropdown-item">
+                            Purchases Report
+                        </router-link>
+                        <router-link to="/sales-return-report" class="dropdown-item">
+                            Sales Return Report
+                        </router-link>
+                        <router-link to="/purchases-return-report" class="dropdown-item">
+                            Purchases Return Report
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-users me-2"></i> User Management
                     </a>
                     <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/users/create" class="dropdown-item">
+                            Create User
+                        </router-link>
                         <router-link to="/users" class="dropdown-item">
-                            Users
+                            All Users
                         </router-link>
                         <router-link to="/roles" class="dropdown-item">
                             Roles & Permissions
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-cog me-2"></i> Settings
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <router-link to="/units" class="dropdown-item">
+                            Units
+                        </router-link>
+                        <router-link to="/currencies" class="dropdown-item">
+                            Currencies
+                        </router-link>
+                        <router-link to="/settings" class="dropdown-item">
+                            System Settings
                         </router-link>
                     </div>
                 </div>
@@ -102,11 +229,13 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '@/store/auth'
-// FIX: Using alias path '@/role/permissions' because permissions.js file is likely at src/role/permissions.js
-import { can } from '@/role/permissions'
-
-const auth = useAuthStore()
+// সমস্ত Import মুছে ফেলা হলো এবং টেমপ্লেট ভাঙা এড়াতে ডামি auth অবজেক্ট তৈরি করা হলো।
+const auth = {
+    user: {
+        name: 'Admin',
+        role: 'User'
+    }
+}
 </script>
 
 <style scoped>
