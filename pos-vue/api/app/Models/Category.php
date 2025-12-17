@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -16,25 +15,14 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'category_code',
+        'category_name',
     ];
 
     /**
-     * Get all of the sub-categories for the Category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the products for the category.
      */
-    public function subCategories(): HasMany
-    {
-        return $this->hasMany(SubCategory::class);
-    }
-
-    /**
-     * Get all of the products for the Category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function products(): HasMany
+    public function products()
     {
         return $this->hasMany(Product::class);
     }

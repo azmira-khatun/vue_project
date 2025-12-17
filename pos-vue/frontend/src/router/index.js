@@ -11,8 +11,11 @@ const RolesList = () => import("@/components/role/RoleList.vue");
 const AddRole = () => import("@/components/role/RoleCreate.vue");
 const EditRole = () => import("@/components/role/RoleEdit.vue");
 
-// *** নতুন যোগ করা হয়েছে: Units Component ***
+// *** নতুন যোগ করা হয়েছে: Units Component ***
 const UnitsIndex = () => import("@/views/UnitsIndex.vue"); 
+
+// *** নতুন যোগ করা হয়েছে: Categories Component ***
+const CategoryIndex = () => import("@/views/CategoryIndex.vue");
 
 
 const routes = [
@@ -45,8 +48,11 @@ const routes = [
                 props: true,
             },
 
-            // *** নতুন যোগ করা হয়েছে: Units Routes ***
+            // *** Units Routes ***
             { path: "units", name: "UnitsList", component: UnitsIndex },
+
+            // *** Categories Routes ***
+            { path: "product-categories", name: "CategoryList", component: CategoryIndex },
             
             // আপনি যদি ভবিষ্যতে অন্য Units CRUD ফর্ম আলাদা রুটে রাখতে চান:
             // { path: "units/create", name: "UnitCreate", component: UnitCreate },

@@ -106,7 +106,6 @@
                         <router-link to="/sale-returns" class="dropdown-item">All Sale Returns</router-link>
                     </div>
                 </div>
-
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex justify-content-between align-items-center"
                         data-bs-toggle="dropdown">
@@ -166,6 +165,7 @@
                     <div class="dropdown-menu bg-transparent border-0 sub-menu">
                         <router-link to="/units" class="dropdown-item">Units</router-link>
                         <router-link to="/currencies" class="dropdown-item">Currencies</router-link>
+                        <router-link to="/payment-methods" class="dropdown-item">Payment Methods</router-link>
                         <router-link to="/settings" class="dropdown-item">System Settings</router-link>
                     </div>
                 </div>
