@@ -20,8 +20,10 @@ const handleLogin = () => {
         // লগইন সফল হলে, প্রমাণীকরণের জন্য একটি ফ্ল্যাগ লোকাল স্টোরেজে সেট করুন
         localStorage.setItem('user_logged_in', 'true');
 
-        // *** মূল সংশোধন: আপনার index.js এ /dashboard রুটটি নেই, তাই /roles এ রিডিরেক্ট করা হলো ***
-        router.push('/roles');
+        // *** মূল পরিবর্তন: /roles এর বদলে ড্যাশবোর্ড রুটে রিডিরেক্ট করা হলো ***
+        // আপনার AsideBar.vue তে রুট '/' কে 'Dashboard' হিসাবে ব্যবহার করা হয়েছে।
+        // তাই এখানে '/' রুটে নেভিগেট করা হবে।
+        router.push('/');
 
     } else {
         alert('Invalid Email or Password. Please try again.');
