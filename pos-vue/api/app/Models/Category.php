@@ -10,9 +10,7 @@ class Category extends Model
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * Mass assignable fields
      */
     protected $fillable = [
         'category_code',
@@ -20,7 +18,8 @@ class Category extends Model
     ];
 
     /**
-     * Get the products for the category.
+     * Relationship: A category has many products
+     * (যদি Product model থাকে)
      */
     public function products()
     {
