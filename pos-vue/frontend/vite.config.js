@@ -1,18 +1,16 @@
 import { defineConfig } from "vite";
-import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [
-    laravel({
-      input: ["resources/css/app.css", "resources/js/app.js"],
-      refresh: true,
-    }),
-    vue(),
+    vue(), // শুধু Vue plugin
   ],
   resolve: {
     alias: {
-      "@": "/resources/js", // Laravel folder structure অনুযায়ী
+      "@": "/src", // আপনার Vue src folder path
     },
+  },
+  server: {
+    port: 5173, // dev server port
   },
 });
