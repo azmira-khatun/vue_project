@@ -72,7 +72,7 @@
                                 <th>City</th>
                                 <th>Country</th>
                                 <th>Address</th>
-                                <th>Actions</th>
+                                <th style="width: 140px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,11 +85,11 @@
                                 <td>{{ supplier.country }}</td>
                                 <td>{{ supplier.address }}</td>
                                 <td>
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex gap-1 justify-content-center">
                                         <button @click="editSupplier(supplier)"
-                                            class="btn btn-sm btn-warning">Edit</button>
+                                            class="btn btn-warning btn-xs">Edit</button>
                                         <button @click="deleteSupplier(supplier.id)"
-                                            class="btn btn-sm btn-danger">Delete</button>
+                                            class="btn btn-danger btn-xs">Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -102,7 +102,6 @@
 </template>
 
 <script>
-// <script> অংশটি আগের মতোই সঠিক আছে, কোনো পরিবর্তনের দরকার নেই।
 import axios from 'axios';
 
 export default {
@@ -147,7 +146,7 @@ export default {
         },
         editSupplier(supplier) {
             this.form = {
-                supplier_name: supplier.supplier_name, // Fixed spread operator issue for clarity
+                supplier_name: supplier.supplier_name,
                 supplier_email: supplier.supplier_email,
                 supplier_phone: supplier.supplier_phone,
                 city: supplier.city,
@@ -181,5 +180,25 @@ export default {
 </script>
 
 <style scoped>
-/* Bootstrap handles most styling, but you can override styles here if needed */
+/* বাটনগুলোকে Bootstrap-এর default 'sm' সাইজের থেকেও ছোট করার জন্য কাস্টম ক্লাস */
+.btn-xs {
+    padding: 0.1rem 0.35rem;
+    /* Padding কমানো হয়েছে */
+    font-size: 0.7rem;
+    /* ফন্ট সাইজ ছোট করা হয়েছে */
+    line-height: 1.2;
+    border-radius: 0.2rem;
+}
+
+/* টেবিল স্টাইল */
+.table th,
+.table td {
+    vertical-align: middle;
+    text-align: left;
+}
+
+/* অ্যাকশন কলামের বাটনগুলোকে মাঝখানে আনা হয়েছে */
+.table td:last-child {
+    text-align: center;
+}
 </style>
