@@ -1,91 +1,93 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// Layout (Dash.vue আপনার সাইডবার এবং মেইন কন্টেন্ট দেখাবে)
+// Layout (Dash.vue)
 const DashLayout = () => import("@/views/adminPanel/Dash.vue");
 
 // Pages
-const LoginView = () => import("@/views/HomeView.vue"); // আপনার লগইন ফর্ম (HomeView.vue)
+const LoginView = () => import("@/views/HomeView.vue"); // লগইন ফর্ম
 
 // Dashboard/Role Management Components
 const RolesList = () => import("@/components/role/RoleList.vue");
 const AddRole = () => import("@/components/role/RoleCreate.vue");
 const EditRole = () => import("@/components/role/RoleEdit.vue");
 
-// *** নতুন যোগ করা হয়েছে: Units Component ***
-const UnitsIndex = () => import("@/views/UnitsIndex.vue"); 
+// Units Component
+const UnitsIndex = () => import("@/views/UnitsIndex.vue");
 
-// *** নতুন যোগ করা হয়েছে: Categories Component ***
+// Categories Component
 const CategoryIndex = () => import("@/views/CategoryIndex.vue");
 
+// ** নতুন: Customers Component **
+const CustomerIndex = () => import("@/views/Customer.vue");
 
 const routes = [
-    // A. লগইন রুট (স্বতন্ত্র): এটি কোনো লেআউটের চাইল্ড হবে না
-    {
-        path: "/login",
-        name: "Login",
-        component: LoginView,
-        meta: { requiresAuth: false }, // প্রমাণীকরণের প্রয়োজন নেই
-    },
+  // A. লগইন রুট
+  {
+    path: "/login",
+    name: "Login",
+    component: LoginView,
+    meta: { requiresAuth: false },
+  },
 
-    // B. ড্যাশবোর্ড রুট (সুরক্ষিত): DashLayout এর মাধ্যমে লোড হবে
-    {
-        path: "/",
-        component: DashLayout, // Layout wrapper (Dash.vue)
-        meta: { requiresAuth: true }, // এই রুটের জন্য লগইন বাধ্যতামূলক
-        children: [
-            {
-                path: "",
-                redirect: "/roles", // মেইন রুট "/" কে সরাসরি /roles পেজে রিডিরেক্ট করা হলো
-            },
-            
-            // --- Roles Routes ---
-            { path: "roles", name: "RolesList", component: RolesList },
-            { path: "roles/create", name: "AddRole", component: AddRole },
-            {
-                path: "roles/edit/:id",
-                name: "EditRole",
-                component: EditRole,
-                props: true,
-            },
+  // B. ড্যাশবোর্ড রুট
+  {
+    path: "/",
+    component: DashLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        redirect: "/roles",
+      },
 
-            // *** Units Routes ***
-            { path: "units", name: "UnitsList", component: UnitsIndex },
+      // --- Roles Routes ---
+      { path: "roles", name: "RolesList", component: RolesList },
+      { path: "roles/create", name: "AddRole", component: AddRole },
+      {
+        path: "roles/edit/:id",
+        name: "EditRole",
+        component: EditRole,
+        props: true,
+      },
 
-            // *** Categories Routes ***
-            { path: "product-categories", name: "CategoryList", component: CategoryIndex },
-            
-            // আপনি যদি ভবিষ্যতে অন্য Units CRUD ফর্ম আলাদা রুটে রাখতে চান:
-            // { path: "units/create", name: "UnitCreate", component: UnitCreate },
-            // { path: "units/edit/:id", name: "UnitEdit", component: UnitEdit, props: true },
-        ],
-    },
-    
-    // কোনো রুট না পেলে /login এ পাঠানোর জন্য
-    {
-        path: "/:catchAll(.*)",
-        redirect: "/login",
-    },
+      // Units Routes
+      { path: "units", name: "UnitsList", component: UnitsIndex },
+
+      // Categories Routes
+      {
+        path: "product-categories",
+        name: "CategoryList",
+        component: CategoryIndex,
+      },
+
+      // ** Customers Routes **
+      { path: "customers", name: "CustomersList", component: CustomerIndex },
+    ],
+  },
+
+  // Catch-all redirect
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/login",
+  },
 ];
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes,
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
 });
 
-// Authentication Guard: এটি নিশ্চিত করবে যে লগইন না করলে ড্যাশবোর্ড দেখা যাবে না
+// Authentication Guard
 router.beforeEach((to, from, next) => {
-    // প্রমাণীকরণ চেক: এই ফ্ল্যাগটি আপনার লগইন সফল হলে HomeView.vue এ সেট করতে হবে
-    const isAuthenticated = localStorage.getItem("user_logged_in") === "true";
+  const isAuthenticated = localStorage.getItem("user_logged_in") === "true";
 
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        // যদি সুরক্ষিত রুট হয় এবং লগইন করা না থাকে, তবে /login এ পাঠান
-        next("/login");
-    } else if (to.name === "Login" && isAuthenticated) {
-        // যদি লগইন করা থাকে এবং কেউ আবার /login এ যেতে চায়, তবে /roles এ পাঠান 
-        next("/roles");
-    } else {
-        next();
-    }
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next("/login");
+  } else if (to.name === "Login" && isAuthenticated) {
+    next("/roles");
+  } else {
+    next();
+  }
 });
 
 export default router;
