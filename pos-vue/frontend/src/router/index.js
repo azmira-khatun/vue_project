@@ -17,8 +17,13 @@ const UnitsIndex = () => import("@/views/UnitsIndex.vue");
 // Categories Component
 const CategoryIndex = () => import("@/views/CategoryIndex.vue");
 
-// ** নতুন: Customers Component **
+// Customers Component
 const CustomerIndex = () => import("@/views/Customer.vue");
+
+// ** নতুন: Suppliers Component **
+const SupplierIndex = () =>
+  // সংশোধিত পাথ: Component টি @/views/ ফোল্ডার থেকে ইমপোর্ট করা হয়েছে।
+  import("@/views/SupplierComponent.vue");
 
 const routes = [
   // A. লগইন রুট
@@ -60,8 +65,11 @@ const routes = [
         component: CategoryIndex,
       },
 
-      // ** Customers Routes **
+      // Customers Routes
       { path: "customers", name: "CustomersList", component: CustomerIndex },
+
+      // ** Suppliers Routes **
+      { path: "suppliers", name: "SuppliersList", component: SupplierIndex },
     ],
   },
 
