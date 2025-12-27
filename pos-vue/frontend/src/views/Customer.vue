@@ -1,101 +1,176 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-r from-gray-100 to-blue-50 flex items-center justify-center">
-        <div class="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
-            <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Add Customer</h1>
+    <div class="container my-5">
+        <h1 class="mb-4 text-primary">Customers CRUD</h1>
 
-            <form @submit.prevent="saveCustomer" class="space-y-5">
+        <div class="card shadow-sm mb-5">
+            <div class="card-body">
+                <h2 class="card-title h4 text-secondary mb-3">
+                    {{ form.id ? 'Update Customer' : 'Add New Customer' }}
+                </h2>
+                <form @submit.prevent="saveCustomer">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input v-model="form.customer_name" type="text" class="form-control" placeholder="Name"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model="form.customer_email" type="email" class="form-control" placeholder="Email"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model="form.customer_phone" type="text" class="form-control" placeholder="Phone"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model="form.city" type="text" class="form-control" placeholder="City" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model="form.country" type="text" class="form-control" placeholder="Country"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <input v-model="form.address" type="text" class="form-control" placeholder="Address"
+                                required>
+                        </div>
+                    </div>
 
-                <!-- Name -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Name</label>
-                    <input v-model="form.name" type="text" placeholder="Enter Name"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-success shadow">
+                            {{ form.id ? 'Update' : 'Add' }}
+                        </button>
+                        <button type="button" @click="resetForm" class="btn btn-secondary shadow">
+                            Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover border">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="c in customers" :key="c.id">
+                                <td>{{ c.id }}</td>
+                                <td>{{ c.customer_name }}</td>
+                                <td>{{ c.customer_email }}</td>
+                                <td>{{ c.customer_phone }}</td>
+                                <td>{{ c.city }}</td>
+                                <td>{{ c.country }}</td>
+                                <td>{{ c.address }}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button @click="editCustomer(c)" class="btn btn-sm btn-warning">Edit</button>
+                                        <button @click="deleteCustomer(c.id)"
+                                            class="btn btn-sm btn-danger">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Email -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Email</label>
-                    <input v-model="form.email" type="email" placeholder="Enter Email"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                </div>
-
-                <!-- Phone -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Phone</label>
-                    <input v-model="form.phone" type="text" placeholder="Enter Phone"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                </div>
-
-                <!-- City -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">City</label>
-                    <input v-model="form.city" type="text" placeholder="Enter City"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                </div>
-
-                <!-- Country -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Country</label>
-                    <input v-model="form.country" type="text" placeholder="Enter Country"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                </div>
-
-                <!-- Address -->
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Address</label>
-                    <textarea v-model="form.address" placeholder="Enter Address"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <div>
-                    <button type="submit"
-                        class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-2 -mt-1" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Save Customer
-                    </button>
-                </div>
-
-            </form>
+            </div>
         </div>
     </div>
 </template>
 
-<script>
-import axios from 'axios';
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-export default {
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                phone: '',
-                city: '',
-                country: '',
-                address: ''
-            }
+const API_URL = 'http://localhost/vue_project/pos-vue/api/public/api/customers'
+
+const customers = ref([])
+
+const form = ref({
+    id: null,
+    // Corrected to match database columns
+    customer_name: '',
+    customer_email: '',
+    customer_phone: '',
+    city: '',
+    country: '',
+    address: ''
+})
+
+const getCustomers = async () => {
+    try {
+        const res = await axios.get(API_URL)
+        customers.value = res.data
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const saveCustomer = async () => {
+    try {
+        if (form.value.id) {
+            await axios.put(`${API_URL}/${form.value.id}`, form.value)
+        } else {
+            await axios.post(API_URL, form.value)
         }
-    },
-    methods: {
-        async saveCustomer() {
-            try {
-                let res = await axios.post('/api/customers', this.form);
-                alert('Customer saved successfully!');
-                // Reset form
-                this.form = { name: '', email: '', phone: '', city: '', country: '', address: '' };
-            } catch (error) {
-                console.log(error.response);
-                alert('Failed to save customer');
-            }
+        resetForm()
+        getCustomers()
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const editCustomer = (c) => {
+    // When editing, map the incoming data (c) to the form fields
+    form.value = {
+        id: c.id,
+        customer_name: c.customer_name,
+        customer_email: c.customer_email,
+        customer_phone: c.customer_phone,
+        city: c.city,
+        country: c.country,
+        address: c.address,
+    }
+}
+
+const deleteCustomer = async (id) => {
+    if (confirm('Are you sure to delete?')) {
+        try {
+            await axios.delete(`${API_URL}/${id}`)
+            getCustomers()
+        } catch (error) {
+            console.error(error)
         }
     }
 }
+
+const resetForm = () => {
+    form.value = {
+        id: null,
+        // Corrected field names for reset
+        customer_name: '',
+        customer_email: '',
+        customer_phone: '',
+        city: '',
+        country: '',
+        address: ''
+    }
+}
+
+onMounted(() => {
+    getCustomers()
+})
 </script>
 
 <style scoped>
-/* Optional: page background gradient is already in container */
+/* No specific scoped styles needed if using full Bootstrap classes */
 </style>
